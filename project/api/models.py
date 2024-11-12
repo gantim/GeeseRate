@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import AbstractUser, Group, Permission, AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 username_validator = RegexValidator(
     regex=r'^[A-Za-zА-Яа-яЁё\s]+$',  # Разрешаем только заглавные буквы и символы
@@ -34,14 +34,6 @@ class User(AbstractUser):
         help_text='Specific permissions for this user.',
         related_query_name='user',
     )
-    def save(self, *args, **kwargs):
-        if self._state.adding and self.password:
-            self.set_password(self.password)
-        elif self.pk is not None:
-            old_password = User.objects.get(pk=self.pk).password
-            if old_password != self.password:
-                self.set_password(self.password)
-        super().save(*args, **kwargs)
     
     
 class Institute(models.Model):

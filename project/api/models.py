@@ -35,7 +35,6 @@ class User(AbstractUser):
         related_query_name='user',
     )
     
-    
 class Institute(models.Model):
     name = models.CharField(max_length=255)
     rating = models.FloatField(default=0)

@@ -5,7 +5,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from api.views import UserViewSet, InstituteViewSet, CourseViewSet, ReviewViewSet, RatingViewSet, CustomTokenObtainPairView
+from api.views import UserViewSet, InstituteViewSet, CourseViewSet, ReviewViewSet, RatingViewSet
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,

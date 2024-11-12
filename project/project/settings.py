@@ -97,8 +97,6 @@ REST_FRAMEWORK = {
 }
 
 from datetime import timedelta
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # срок действия токена доступа

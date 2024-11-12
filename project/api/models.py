@@ -34,14 +34,6 @@ class User(AbstractUser):
         help_text='Specific permissions for this user.',
         related_query_name='user',
     )
-    def save(self, *args, **kwargs):
-        if self._state.adding and self.password:
-            self.set_password(self.password)
-        else:
-            old_password = User.objects.get(pk=self.pk).password if self.pk else None
-            if old_password != self.password:
-                self.set_password(self.password)
-        super().save(*args, **kwargs)
     
     
 class Institute(models.Model):

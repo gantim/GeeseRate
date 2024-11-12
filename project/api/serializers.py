@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from .models import User, Institute, Course, Review, Rating
 from django.core.validators import RegexValidator
+from rest_framework_simplejwt.tokens import RefreshToken
 
 username_validator = RegexValidator(
     regex=r'^[A-Za-zА-Яа-яЁё\s]+$',  # Разрешаем только заглавные буквы и символы
-    message='Имя пользователя может содержать только заглавные буквы и символы . @ + -'
+    message='Имя пользователя может содержать только строчные и заглавные буквы'
 )
 
 class UserSerializer(serializers.ModelSerializer):

@@ -90,9 +90,33 @@ DATABASES = {
     },
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
+from datetime import timedelta
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # срок действия токена доступа
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),      # срок действия токена обновления
+    'ROTATE_REFRESH_TOKENS': True,                    # автоматически обновлять refresh токен при его использовании
+    'BLACKLIST_AFTER_ROTATION': True,                 # использовать черный список для неактуальных токенов
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': '5004',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'api.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

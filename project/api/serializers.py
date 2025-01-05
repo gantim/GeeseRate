@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Institute, Course, Review, Rating
+from .models import User, Institute, Course, Review, Rating, Lesson
 from django.core.validators import RegexValidator
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -53,3 +53,8 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = ['id', 'course', 'average_rating', 'total_reviews', 'last_updated']
+
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = ['id', 'institute', 'course', 'teacher', 'topic', 'address', 'room', 'date', 'time']

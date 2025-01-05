@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 from rest_framework import viewsets
-from .models import User, Institute, Course, Review, Rating
-from .serializers import UserSerializer, InstituteSerializer, CourseSerializer, ReviewSerializer, RatingSerializer
+from .models import User, Institute, Course, Review, Rating, Lesson
+from .serializers import UserSerializer, InstituteSerializer, CourseSerializer, ReviewSerializer, RatingSerializer, LessonSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -23,3 +23,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+
+class LessonViewSet(viewsets.ModelViewSet):
+    queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer

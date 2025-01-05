@@ -34,7 +34,7 @@ class User(AbstractUser):
         help_text='Specific permissions for this user.',
         related_query_name='user',
     )
-    
+
 class Institute(models.Model):
     name = models.CharField(max_length=255)
     rating = models.FloatField(default=0)
@@ -67,4 +67,16 @@ class Rating(models.Model):
     average_rating = models.FloatField(default=0)
     total_reviews = models.IntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
-    
+
+class Lesson(models.Model):
+    institute = models.ForeignKey(Institute, on_delete=models.CASCADE, related_name='lessons')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={'role': 'teacher'})
+    topic = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    room = models.CharField(max_length=50)
+    date = models.DateField()
+    time = models.TimeField()
+
+    def __str__(self):
+        return f"{self.topic} - {self.date} {self.time}"

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser, Group, Permission, AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 
 username_validator = RegexValidator(
     regex=r'^[A-Za-zА-Яа-яЁё\s]+$',  # Разрешаем только заглавные буквы и символы
@@ -54,14 +55,6 @@ class Course(models.Model):
     def __str__(self):
         return self.name
     
-class Review(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='reviews')
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='reviews')
-    rating = models.IntegerField()
-    comment = models.TextField()
-    is_anonymous = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
 class Rating(models.Model):
     course = models.OneToOneField(Course, on_delete=models.CASCADE, related_name='rating')
     average_rating = models.FloatField(default=0)
@@ -77,6 +70,33 @@ class Lesson(models.Model):
     room = models.CharField(max_length=50)
     date = models.DateField()
     time = models.TimeField()
+    average_rating = models.FloatField(default=0)  # Средняя оценка
+    total_reviews = models.IntegerField(default=0)  # Количество отзывов
 
     def __str__(self):
         return f"{self.topic} - {self.date} {self.time}"
+
+class Review(models.Model):
+    ADVANTAGES_CHOICES = [  # Чекбоксы с преимуществами
+        ('engaging', 'Интересное занятие'),
+        ('clear', 'Понятное объяснение материала'),
+        ('organized', 'Хорошая организация'),
+        ('interactive', 'Интерактивный подход'),
+        ('practical', 'Практическое применение'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='reviews')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.IntegerField()
+    comment = models.TextField()
+    advantages = ArrayField(  # Новое поле
+        models.CharField(max_length=50, choices=ADVANTAGES_CHOICES),
+        blank=True,
+        default=list,
+        help_text="Выберите преимущества пары"
+    )
+    is_anonymous = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Review by {self.user} for {self.lesson} - {self.rating}"

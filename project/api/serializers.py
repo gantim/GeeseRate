@@ -47,7 +47,7 @@ class CourseSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['id', 'user', 'course', 'rating', 'comment', 'is_anonymous', 'created_at']
+        fields = ['id', 'user', 'lesson', 'rating', 'comment', 'advantages', 'is_anonymous', 'created_at']
 
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,6 +55,9 @@ class RatingSerializer(serializers.ModelSerializer):
         fields = ['id', 'course', 'average_rating', 'total_reviews', 'last_updated']
 
 class LessonSerializer(serializers.ModelSerializer):
+    average_rating = serializers.FloatField(read_only=True)
+    total_reviews = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Lesson
-        fields = ['id', 'institute', 'course', 'teacher', 'topic', 'address', 'room', 'date', 'time']
+        fields = ['id', 'institute', 'course', 'teacher', 'topic', 'address', 'room', 'date', 'time', 'average_rating', 'total_reviews']

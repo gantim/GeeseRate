@@ -16,9 +16,13 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
+from rest_framework import filters
+
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['lesson__id']
 
 class RatingViewSet(viewsets.ModelViewSet):
     queryset = Rating.objects.all()

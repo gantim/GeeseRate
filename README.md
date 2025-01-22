@@ -66,9 +66,9 @@ GeeseRate предоставляет платформу для:
 
 ### Настройка базы данных
 
-1. Убедитесь, что PostgreSQL установлен и запущен.
+1. **Убедитесь, что PostgreSQL установлен и запущен.**
 
-2. Создайте базу данных:
+2. **Создайте базу данных:**
    ```sql
    CREATE DATABASE geeserate;
    CREATE USER geese_user WITH PASSWORD 'your_password';
@@ -77,3 +77,15 @@ GeeseRate предоставляет платформу для:
    ALTER ROLE geese_user SET timezone TO 'UTC';
    GRANT ALL PRIVILEGES ON DATABASE geeserate TO geese_user;
 
+3. **Обновите настройки базы данных в settings.py:**
+   ```bash
+   DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'geeserate',
+        'USER': 'geese_user',
+        'PASSWORD': 'your_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+   }

@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import User, Institute, Course, Review, Rating, Lesson
 from django.core.validators import RegexValidator
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.validators import UniqueValidator
+
 
 username_validator = RegexValidator(
     regex=r'^[A-Za-zА-Яа-яЁё\s]+$',  # Разрешаем только заглавные буквы и символы
@@ -10,14 +12,20 @@ username_validator = RegexValidator(
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
-        validators=[username_validator]  # Применяем валидатор к полю username
-    )   
+    validators=[
+        username_validator,
+        UniqueValidator(queryset=User.objects.all(), message="Этот username уже используется.")
+    ],
+    required=True
+    )
     
     class Meta:
         model = User
-        fields = ['id','password', 'username', 'first_name', 'last_name', 'email', 'role']
-        extra_kwargs = {'password': {'write_only': True}}
-        
+        fields = ['id', 'password', 'username', 'first_name', 'last_name', 'email', 'role']
+        extra_kwargs = {
+            'password': {'write_only': True, 'required': False}  # Пароль необязателен при обновлении
+        }
+
     def create(self, validated_data):
         user = User(
             username=validated_data['username'],
@@ -31,10 +39,16 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
+        # Если пароль указан, обновляем его
         if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
-            validated_data.pop('password')
-        return super().update(instance, validated_data)
+            instance.set_password(validated_data.pop('password'))
+        
+        # Обновляем остальные поля
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        instance.save()
+        return instance
 
 class InstituteSerializer(serializers.ModelSerializer):
     class Meta:

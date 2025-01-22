@@ -64,6 +64,8 @@ GeeseRate предоставляет платформу для:
     ```bash
     pip install -r requirements.txt
 
+---
+
 ### Настройка базы данных
 
 1. **Убедитесь, что PostgreSQL установлен и запущен.**
@@ -89,3 +91,13 @@ GeeseRate предоставляет платформу для:
             'PORT': '5432',
       }
     }
+
+---
+
+### Миграции
+
+Примените миграции для создания структуры базы данных:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate

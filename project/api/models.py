@@ -77,19 +77,21 @@ class Lesson(models.Model):
         return f"{self.topic} - {self.date} {self.time}"
 
 class Review(models.Model):
-    ADVANTAGES_CHOICES = [  # Чекбоксы с преимуществами
-        ('engaging', 'Интересное занятие'),
-        ('clear', 'Понятное объяснение материала'),
-        ('organized', 'Хорошая организация'),
-        ('interactive', 'Интерактивный подход'),
-        ('practical', 'Практическое применение'),
+    ADVANTAGES_CHOICES = [
+        ('usefulness', 'Полезность материала'),
+        ('delivery', 'Подача материала'),
+        ('kindness', 'Доброжелательность преподавателя'),
+        ('interaction', 'Взаимодействие со студентами'),
+        ('equipment', 'Аудитория и оборудование'),
+        ('difficulty', 'Сложность заданий на паре'),
+        ('materials', 'Предоставление материалов'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='reviews')
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='reviews')
+    user = models.CharField(max_length=255, verbose_name="User")
+    lesson = models.ForeignKey('Lesson', on_delete=models.CASCADE, related_name='reviews')
     rating = models.IntegerField()
-    comment = models.TextField()
-    advantages = ArrayField(  # Новое поле
+    comment = models.TextField(blank=True, null=True, verbose_name="Comment") 
+    advantages = ArrayField(
         models.CharField(max_length=50, choices=ADVANTAGES_CHOICES),
         blank=True,
         default=list,

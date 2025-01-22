@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-bkm^)5m3e$fyy80q9pl0&5b9x8bfwzy)@daz#hcolequsykea0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.nv-server.online', 'localhost', '127.0.0.1', 'nv-server.online']
 
 
 # Application definition

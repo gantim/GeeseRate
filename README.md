@@ -78,14 +78,14 @@ GeeseRate предоставляет платформу для:
    GRANT ALL PRIVILEGES ON DATABASE geeserate TO geese_user;
 
 3. **Обновите настройки базы данных в settings.py:**
-   ```bash
-  DATABASES = {
-  'default': {
-          'ENGINE': 'django.db.backends.postgresql',
-          'NAME': 'geeserate',
-          'USER': 'geese_user',
-          'PASSWORD': 'your_password',
-          'HOST': 'localhost',
-          'PORT': '5432',
-  }
-  }
+    ```bash
+    DATABASES = {
+      'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'geeserate',
+            'USER': 'geese_user',
+            'PASSWORD': 'your_password',
+            'HOST': 'localhost',
+            'PORT': '5432',
+      }
+    }

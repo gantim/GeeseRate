@@ -37,12 +37,14 @@ class User(AbstractUser):
     )
 
 class Institute(models.Model):
-    name = models.CharField(max_length=255)
-    rating = models.FloatField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    abbreviation = models.CharField(max_length=50, verbose_name="Аббревиатура института")  # Аббревиатура
+    name = models.CharField(max_length=255, verbose_name="Полное название института")      # Полное название
+    address = models.TextField(verbose_name="Адрес института")                             # Адрес
+    rating = models.FloatField(default=0, verbose_name="Рейтинг института")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     def __str__(self):
-        return self.name
+        return f"{self.abbreviation} - {self.name}"
     
 class Course(models.Model):
     name = models.CharField(max_length=255)

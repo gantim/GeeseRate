@@ -39,7 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
 class InstituteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institute
-        fields = ['id', 'name', 'rating']
+        fields = ['id', 'abbreviation', 'name', 'address', 'rating', 'created_at']
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -63,3 +63,16 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ['id', 'institute', 'course', 'teacher', 'topic', 'address', 'room', 'date', 'time', 'average_rating', 'total_reviews']
+
+class QRCodeSerializer(serializers.Serializer):
+    link = serializers.URLField(required=True, help_text="Ссылка для генерации QR-кода")
+    expiration_time = serializers.IntegerField(
+        required=True,
+        min_value=1,
+        help_text="Время действия QR-кода (например, 5, 10 и т.д.)"
+    )
+    time_unit = serializers.ChoiceField(
+        choices=['seconds', 'minutes', 'hours'],
+        default='minutes',
+        help_text="Единицы времени действия QR-кода: seconds, minutes, hours"
+    )

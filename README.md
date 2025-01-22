@@ -145,7 +145,7 @@ python manage.py runserver
 
 ### Автор
 
-Проект разработан с использованием современных технологий и подходов. Если у вас есть вопросы, пишите:
+Если у вас есть вопросы, пишите:
 
 Mail: [queniiikio@qwekio.ru](mailto:queniiikio@qwekio.ru)
 

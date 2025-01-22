@@ -61,8 +61,8 @@ GeeseRate предоставляет платформу для:
    .venv\Scripts\activate     # Для Windows
 
 3. **Установите зависимости:**
-  ```bash
-  pip install -r requirements.txt
+    ```bash
+    pip install -r requirements.txt
 
 ### Настройка базы данных
 

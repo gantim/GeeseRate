@@ -78,19 +78,21 @@ GeeseRate предоставляет платформу для:
    ALTER ROLE geese_user SET default_transaction_isolation TO 'read committed';
    ALTER ROLE geese_user SET timezone TO 'UTC';
    GRANT ALL PRIVILEGES ON DATABASE geeserate TO geese_user;
+   ```
 
-3. **Обновите настройки базы данных в settings.py:**
-    ```bash
-    DATABASES = {
-      'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'geeserate',
-            'USER': 'geese_user',
-            'PASSWORD': 'your_password',
-            'HOST': 'localhost',
-            'PORT': '5432',
-      }
-    }
+3. **Обновите настройки базы данных в `settings.py`:**
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'geeserate',
+           'USER': 'geese_user',
+           'PASSWORD': 'your_password',
+           'HOST': 'localhost',
+           'PORT': '5432',
+       }
+   }
+   ```
 
 ---
 
@@ -101,3 +103,47 @@ GeeseRate предоставляет платформу для:
 ```bash
 python manage.py makemigrations
 python manage.py migrate
+```
+
+---
+
+### Запуск
+
+Запустите сервер разработки:
+
+```bash
+python manage.py runserver
+```
+
+---
+
+### Документация API
+
+1. **Swagger:** [http://127.0.0.1:8000/swagger/](http://127.0.0.1:8000/swagger/)
+2. **Redoc:** [http://127.0.0.1:8000/redoc/](http://127.0.0.1:8000/redoc/)
+
+---
+
+### Полезная информация
+
+- **Для генерации QR-кодов** используйте эндпоинт `/api/qr/` (POST).
+  
+  Пример запроса:
+  ```json
+  {
+      "link": "https://example.com",
+      "expiration_time": 5,
+      "time_unit": "minutes"
+  }
+  ```
+
+  После генерации QR-кода его можно получить по уникальному ключу через эндпоинт `/api/qr/<qr_key>/`.
+
+- **Управление данными пользователей:**
+  Все пользовательские данные можно управлять через эндпоинты `/api/users/`.
+
+---
+
+### Автор
+
+Проект разработан с использованием современных технологий и подходов. Если у вас есть вопросы, пишите: [queniiikio@qwekio.ru](mailto:queniiikio@qwekio.ru).
